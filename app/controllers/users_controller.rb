@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
+      flash[:success] = "変更が完了しました"
       redirect_to @user
     else
       render 'edit'
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
+    flash[:success] = "アカウントを削除しました"
     redirect_to users_url
   end
 
@@ -53,6 +53,13 @@ class UsersController < ApplicationController
     end
 
     # Before actions
+
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
 
 
     def correct_user
