@@ -6,7 +6,7 @@ describe "AuthenticationPages" do
   	describe "signin page" do
   		before { visit signin_path }
 
-  		it { should have_content('Sign in') }
+  		it { should have_content('ログイン') }
   		it { should have_title('Sign in')}
   	end
 
@@ -14,10 +14,10 @@ describe "AuthenticationPages" do
     	before { visit signin_path }
 
     	describe "with invalid information" do
-      		before { click_button "Sign in" }
+      		before { click_button "ログイン" }
 
       		it { should have_title('Sign in') }
-      		it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      		it { should have_selector('div.alert.alert-error', text: '違います') }
 
       		describe "after visiting another page" do
         		before { click_link "ホーム" }
@@ -29,9 +29,9 @@ describe "AuthenticationPages" do
     	describe "with valid information" do
       	let(:user) { FactoryGirl.create(:user) }
         before do
-          fill_in "Email",    with: user.email.upcase
+          fill_in "Name",    with: user.name
           fill_in "Password", with: user.password
-          click_button "Sign in"
+          click_button "ログイン"
         end
 
         it { should have_title(user.name) }
@@ -56,9 +56,9 @@ describe "AuthenticationPages" do
         describe "when attempting to visit a protected page" do
             before do
               visit edit_user_path(user)
-              fill_in "Email",    with: user.email
+              fill_in "Name",    with: user.name
               fill_in "Password", with: user.password
-              click_button "Sign in"
+              click_button "ログイン"
             end
 
             describe "after signing in" do
